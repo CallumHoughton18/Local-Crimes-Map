@@ -1,0 +1,84 @@
+var mapModule = (function() {
+
+var _crimeMarkersLayer
+var _map
+
+function initMap(map, options) {
+  // get point lat and lon
+  let lon = "53.400002";
+  let lat = "-2.983333";
+  // zoom to point & add it to map
+  map.preferCanvas = true;
+  map.zoomControl = false;
+  map.setView([lon, lat], 16);
+  _crimeMarkersLayer = L.layerGroup().addTo(map);
+  map.on('moveend', LoadCrimes);
+  getLocation()
+  L.easyButton('fa-crosshairs fa-lg', function(btn, map){
+    getLocation()
+  }).addTo(map);
+  _map = map;
+}
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } 
+  else {
+    alert("Geolocation is not supported by this browser :(");
+  }
+}
+
+function showPosition(position) {
+  let currentLat = position.coords.latitude;
+  let currentLng = position.coords.longitude; 
+  _map.setView([currentLat, currentLng], 16);
+}
+
+function LoadCrimes() {
+  var selectedDate = $('#dateSelect').val(); 
+  var bounds = _map.getBounds();
+  var boundsArray = [bounds.getNorthWest(), bounds.getNorthEast(), bounds.getSouthEast(), bounds.getSouthWest()]
+  var boundsText = "";
+
+  for(let i = 0; i < boundsArray.length; i++){
+    boundsText += boundsArray[i].lat + "," + boundsArray[i].lng; 
+    if (i != boundsArray.length - 1){
+      boundsText += ":"
+    }
+  }
+
+    $.ajax({
+      url: '/api/allcrimesinarea',
+      type: "get",
+      data: {
+        'area': boundsText,
+        'date': selectedDate
+      },
+      dataType: 'json',
+      success: function (data) {
+        {
+          _crimeMarkersLayer.clearLayers();
+
+          data.forEach(function(key, index){
+            var lat = key.location.latitude
+            var lng = key.location.longitude
+            var category = key.category
+            var locInfo = key.location.street.name
+            var outcome = "No recorded outcome"
+            if (key.outcome_status && key.outcome_status.category){
+              outcome = key.outcome_status.category
+            }
+
+            var crimeMarker = L.circleMarker([lat,lng], { color: '#3388ff'}).addTo(_crimeMarkersLayer);
+            crimeMarker.bindPopup("<b>" + category + "</b>" + "<br>" + locInfo + "</br>" + "<br>" + outcome + "</br>")
+          });
+        }
+      }
+    });
+  }
+  return {
+    initMap: initMap,
+    loadCrimes: LoadCrimes 
+  };
+}());
