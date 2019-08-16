@@ -27,7 +27,7 @@ class Crime(models.Model):
     crime_type = models.ForeignKey(CrimeType, on_delete=models.PROTECT)
     resolution = models.ForeignKey(Resolution,default=1, on_delete=models.PROTECT)
 
-    def Calculate_CrimeType_Count(crimes):
+    def calculate_crimeType_count(crimes):
         crime_groups = {}
 
         for crime in crimes:

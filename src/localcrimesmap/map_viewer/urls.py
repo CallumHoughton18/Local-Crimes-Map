@@ -1,6 +1,6 @@
 from django.urls import path, include
-from .views import RenderMap
+from .views import render_map
 
 urlpatterns = [
-    path('', RenderMap, name='map'),
+    path('', render_map, name='map'),
 ]

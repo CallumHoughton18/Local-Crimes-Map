@@ -5,29 +5,29 @@ from math import atan2, acos, cos, sin, asin, radians, degrees
 def get_month_intervals():
     startdate = date(2005,1,1)
     enddate =  date.today() - timedelta(30)
-    monthsList = []
+    monthslist = []
 
     total_months = lambda dt: dt.month + 12 * dt.year
 
     for tot_m in range(total_months(startdate)-1, total_months(enddate)):
         year, month = divmod(tot_m, 12)
-        monthsList.append(datetime(year, month+1, 1).strftime('%Y-%m'))
+        monthslist.append(datetime(year, month+1, 1).strftime('%Y-%m'))
 
-    monthsList.reverse()
-    return monthsList
+    monthslist.reverse()
+    return monthslist
 
 def get_month_intervals_as_tuple():
     return tuple((item, item) for item in get_month_intervals())
 
 def add_miles_to_lat_lng(lat, lng, bearing, miles):
-    latRadian = radians(lat)
-    lngRadian = radians(lng)
-    bearingRadian = radians(bearing)
+    latradian = radians(lat)
+    lngradian = radians(lng)
+    bearingradian = radians(bearing)
 
-    lat2Radians = asin(sin(latRadian) * cos(miles/EARTH_RADIUS_MILES) + cos(latRadian) * sin(miles/EARTH_RADIUS_MILES) * cos(bearingRadian))
-    lng2Radians = lngRadian + atan2(sin(bearingRadian) * sin(miles/EARTH_RADIUS_MILES) * cos(latRadian), cos(miles/EARTH_RADIUS_MILES) - sin(latRadian) * sin(lat2Radians))
+    lat2radians = asin(sin(latradian) * cos(miles/EARTH_RADIUS_MILES) + cos(latradian) * sin(miles/EARTH_RADIUS_MILES) * cos(bearingradian))
+    lng2radians = lngradian + atan2(sin(bearingradian) * sin(miles/EARTH_RADIUS_MILES) * cos(latradian), cos(miles/EARTH_RADIUS_MILES) - sin(latradian) * sin(lat2radians))
 
-    lat2Degrees = degrees(lat2Radians)
-    lng2Degrees = degrees(lng2Radians)
+    lat2degrees = degrees(lat2radians)
+    lng2degrees = degrees(lng2radians)
 
-    return (lat2Degrees, lng2Degrees)
+    return (lat2degrees, lng2degrees)

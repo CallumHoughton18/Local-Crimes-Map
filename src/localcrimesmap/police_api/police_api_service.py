@@ -2,8 +2,11 @@ from police_api import constants
 from datetime import datetime
 import requests
 from django.contrib.gis.geos import Point
+import logging
 
 from common.models import Crime, CrimeType, Crime_Location_Detail, Resolution
+
+logger = logging.getLogger(__name__)
 
 def get_all_crimes(lat, lng, date):
     dateFormatted = datetime.strptime(date, "%Y-%m")
@@ -19,15 +22,20 @@ def get_crimes_within_area(areaPolygon, date):
 
 def basic_all_crime_api(params):
     apiurl = constants.BASE_POLICE_API_URL + constants.STREET_CRIME_URL + constants.ALL_CRIME_URL
-
     apirequest = requests.get(apiurl, params=params)
-    crimes = apirequest.json()
+    logger.info(f"police api request: ({apirequest.status_code}) {apirequest.reason}")
 
-    return crimes     
+    if apirequest.status_code == 200:
+        crimes = apirequest.json()
+        return crimes
+    else:
+        return ()
 
 
 def save_crimes_JSON(crimesJSON):
     crimesformatted = []
+    logger.info(f"Attempting to save {len(crimesJSON)} crimes")
+
     for crime in crimesJSON:
         resolution = Resolution.objects.get(id=1)
 
@@ -47,7 +55,8 @@ def save_crimes_JSON(crimesJSON):
                                location_detail=crimelocationdetail, 
                                crime_type=crimeType,
                                resolution=resolution))
-
-                               
+                           
     Crime.objects.bulk_create(crimesformatted, ignore_conflicts=True)
+    logger.info(f"Saved {len(crimesformatted)} crimes")
+
     return crimesformatted

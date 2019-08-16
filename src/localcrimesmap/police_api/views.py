@@ -9,7 +9,6 @@ def get_all_crimes_api(request):
         lng = request.GET['lng']
         date = request.GET['date']
         crimesJSON = get_all_crimes(lat, lng, date)
-        #crimesFormattedJSON = save_crimes_JSON(crimesJSON)
         return JsonResponse(crimesJSON, safe=False)
 
     else:

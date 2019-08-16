@@ -40,6 +40,54 @@ def get_secret(setting, secrets=secrets):
     except KeyError:
         raise ImproperlyConfigured("Set the {} setting".format(setting))
 
+# logging
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '[{asctime}] {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'info': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/info.log',
+            'formatter':'simple'
+        },
+        'error': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/error.log',
+            'formatter':'verbose'
+        }
+    },
+     'loggers': {
+        'crime_summary.CrimeSummaryView': {
+            'handlers': ['info','error'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'map_viewer.views': {
+            'handlers': ['info','error'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'police_api.police_api_service': {
+            'handlers': ['info','error'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 

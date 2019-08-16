@@ -11,6 +11,10 @@ __pycache__/
 *.sw[po]
 secrets.json
 
+#logging stuff
+src/logs/*.log
+src/localcrimesmap/logs/*.log
+
 # Distribution / packaging
 .Python
 build/
