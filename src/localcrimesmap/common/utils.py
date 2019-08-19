@@ -3,8 +3,8 @@ from .constants import EARTH_RADIUS_MILES
 from math import atan2, acos, cos, sin, asin, radians, degrees
 
 def get_month_intervals():
-    startdate = date(2005,1,1)
-    enddate =  date.today() - timedelta(30)
+    startdate = date(2015,1,1)
+    enddate =  date.today() - timedelta(30) #get previous month as last possible interval
     monthslist = []
 
     total_months = lambda dt: dt.month + 12 * dt.year

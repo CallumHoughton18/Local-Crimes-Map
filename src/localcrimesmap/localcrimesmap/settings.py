@@ -117,6 +117,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'leaflet',
     'crispy_forms',
+    'freezegun',
 ]
 
 MIDDLEWARE = [
