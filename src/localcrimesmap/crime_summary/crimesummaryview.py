@@ -24,7 +24,7 @@ class CrimeSummaryView(View):
         return polystring.rstrip(':')
 
     def get(self, request):
-        return render(request, 'crime_summary/summary.html', {'form': CrimeSummaryForm(auto_id="summaryform_%s")})
+        return render(request, 'crime_summary/summary.html', {'form': CrimeSummaryForm(auto_id="summaryform_%s"),'crime_summary':'active'})
 
     def post(self, request):
         form = CrimeSummaryForm(request.POST)

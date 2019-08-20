@@ -34,25 +34,17 @@
   <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
         <div class="container">
-        <a class="navbar-brand" href="#">Local Crimes Map</a>
+        <a class="navbar-brand" href="{% url 'map' %}">Local Crimes Map</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                        <a class="nav-link" href="#">Home
-                            <span class="sr-only">(current)</span>
-                        </a>
+                <li class="nav-item {{ map }}">
+                        <a class="nav-link" href="{% url 'map' %}">Map View</a>
                 </li>
-                <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                </li>
-                <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
-                </li>
-                <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                <li class="nav-item {{ crime_summary }}">
+                        <a class="nav-link" href="{% url 'crimesummary' %}">Crime Summary Report</a>
                 </li>
             </ul>
         </div>
