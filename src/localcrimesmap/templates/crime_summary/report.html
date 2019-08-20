@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block title %} Crime Report {% endblock title %}
 
@@ -18,8 +19,16 @@
     </div>
 
     <div id="crimelist" class="tab-pane container fade">
+        <select class="custom-select" id="crimetype-select">
+            <option selected>Filter by Crime Type...</option>
+            {% for crime_type,crime_amount in crime_type_list %}
+                <option>{{ crime_type }}</option>
+            {% endfor %}
+        </select>
         {% include "crime_summary/crime_snippet.html" with crime_list=detected_crimes %}
     </div>
 </div>
+
+<Script src="{% static 'js/report.js' %}"></script>
 
 {% endblock content %}
