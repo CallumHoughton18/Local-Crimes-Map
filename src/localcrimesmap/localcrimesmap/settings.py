@@ -93,7 +93,7 @@ SECRET_KEY =  os.getenv('SECRETKEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localcrimesmap.heroku.app.com']
+ALLOWED_HOSTS = ['localcrimesmap.herokuapp.com']
 
 
 # Application definition
