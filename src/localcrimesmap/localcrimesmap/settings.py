@@ -92,7 +92,7 @@ LOGGING = {
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = get_secret('SECRETKEY')
+SECRET_KEY =  os.getenv('SECRETKEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -159,8 +159,8 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'localcrimemap_devdb',
         'USER' : 'postgres',
-        'PASSWORD' : get_secret('DBPASSWORD'),
-        'HOST' : get_secret('DBHOST'),
+        'PASSWORD' :  os.getenv("DBPASSWORD"),
+        'HOST' :  os.getenv("DBHOST"),
         'PORT' : '5432'
     }
 }
