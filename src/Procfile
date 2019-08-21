@@ -1,1 +1,1 @@
-web: gunicorn localcrimesmap/localcrimesmap.wsgi
+web: gunicorn localcrimesmap.wsgi
