@@ -1,1 +1,1 @@
-web: gunicorn localcrimesmap.wsgi
+web: python localcrimesmap/manage.py runserver 0.0.0.0:$PORT --noreload
