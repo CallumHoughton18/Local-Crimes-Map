@@ -91,9 +91,9 @@ LOGGING = {
 SECRET_KEY =  os.getenv('SECRETKEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DJANGODEBUG')
 
-ALLOWED_HOSTS = ['localcrimesmap.herokuapp.com']
+ALLOWED_HOSTS = ['localcrimesmap.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -153,11 +153,11 @@ WSGI_APPLICATION = 'localcrimesmap.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'localcrimemap_devdb',
-        'USER' : 'postgres',
+        'NAME': os.getenv("DBNAME"),
+        'USER' : os.getenv("DBUSER"),
         'PASSWORD' :  os.getenv("DBPASSWORD"),
         'HOST' :  os.getenv("DBHOST"),
-        'PORT' : '5432'
+        'PORT' : os.getenv("DBPORT")
     }
 }
 
