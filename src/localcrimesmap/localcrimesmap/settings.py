@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 import json
 from django.core.exceptions import ImproperlyConfigured
+import django_heroku
 
 if os.name == 'nt':
     import platform
@@ -206,3 +207,5 @@ STATICFILES_DIRS = [
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+django_heroku.settings(locals())
