@@ -39,7 +39,7 @@ def save_crimes_JSON(crimesJSON):
     for crime in crimesJSON:
         resolution = Resolution.objects.get(id=1)
 
-        crimePoint = Point(float(crime['location']['latitude']), float(crime['location']['longitude']))
+        crimePoint = Point(float(crime['location']['longitude']),float(crime['location']['latitude']))
 
         crimeType, crimetype_created = CrimeType.objects.get_or_create(crime_description=crime['category']) 
 
