@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 import json
 from django.core.exceptions import ImproperlyConfigured
+import dj_database_url
+import dotenv
 import django_heroku
 
 if os.name == 'nt':
@@ -29,6 +31,11 @@ if os.name == 'nt':
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# .env file loading for localenv db setting
+dotenv_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
 
 # Heroku Settings
 # DATABASES['default'] = dj_database_url.config()
@@ -151,16 +158,23 @@ WSGI_APPLICATION = 'localcrimesmap.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': os.getenv("DBNAME"),
-        'USER' : os.getenv("DBUSER"),
-        'PASSWORD' :  os.getenv("DBPASSWORD"),
-        'HOST' :  os.getenv("DBHOST"),
-        'PORT' : os.getenv("DBPORT")
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'NAME': os.getenv("DBNAME"),
+#         'USER' : os.getenv("DBUSER"),
+#         'PASSWORD' :  os.getenv("DBPASSWORD"),
+#         'HOST' :  os.getenv("DBHOST"),
+#         'PORT' : os.getenv("DBPORT")
+#     }
+# }
+
+if 'DATABASE_URL' in os.environ:  # stupidly can't change database_url connection string on heroku
+    if 'postgres' in os.environ['DATABASE_URL']:
+        os.environ['DATABASE_URL'] = os.environ['DATABASE_URL'].replace('postgres', 'postgis')
+
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 
 # Password validation
@@ -209,3 +223,4 @@ STATICFILES_DIRS = [
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 django_heroku.settings(locals())
+#del DATABASES['default']['OPTIONS']['sslmode']
