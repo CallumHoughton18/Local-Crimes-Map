@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "django-env\\Scripts\\python.exe",
+    "python.pythonPath": "django-env/bin/python",
     "python.testing.unittestArgs": [
         "-v",
         "-s",

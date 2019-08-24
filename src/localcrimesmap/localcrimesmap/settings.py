@@ -92,7 +92,7 @@ LOGGING = {
 SECRET_KEY =  os.getenv('SECRETKEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DJANGODEBUG')
+DEBUG = os.getenv('DJANGODEBUG') == 'True'
 
 ALLOWED_HOSTS = ['localcrimesmap.herokuapp.com', '127.0.0.1']
 

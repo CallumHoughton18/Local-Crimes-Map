@@ -8,12 +8,12 @@
             "name": "Python: Django",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}\\localcrimesmap\\manage.py",
+            "program": "${workspaceFolder}/localcrimesmap/manage.py",
             "args": [
                 "runserver",
                 "--noreload"
             ],
-            "env": {"DBUSER":"postgres","DBNAME":"localcrimemap_devdb","DBPORT":"5432","DJANGODEBUG":"True"},
+            "env": {"DBHOST":"localhost","DBUSER":"dev","DBNAME":"localcrimesmap_devdb","DBPASSWORD":"devtesting","DBPORT":"5432","DJANGODEBUG":"True"},
             "django": false
         }
     ]

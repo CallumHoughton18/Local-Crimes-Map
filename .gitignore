@@ -140,3 +140,5 @@ dmypy.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+src/.vscode/launch.json
+src/.vscode/settings.json
