@@ -13,7 +13,7 @@
                 "runserver",
                 "--noreload"
             ],
-            "env": {"DBHOST":"localhost","DBUSER":"dev","DBNAME":"localcrimesmap_devdb","DBPASSWORD":"devtesting","DBPORT":"5432","DJANGODEBUG":"True"},
+            "env": {"DJANGODEBUG":"True"},
             "django": false
         }
     ]

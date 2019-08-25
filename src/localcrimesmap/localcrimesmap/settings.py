@@ -158,17 +158,6 @@ WSGI_APPLICATION = 'localcrimesmap.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#         'NAME': os.getenv("DBNAME"),
-#         'USER' : os.getenv("DBUSER"),
-#         'PASSWORD' :  os.getenv("DBPASSWORD"),
-#         'HOST' :  os.getenv("DBHOST"),
-#         'PORT' : os.getenv("DBPORT")
-#     }
-# }
-
 if 'DATABASE_URL' in os.environ:  # stupidly can't change database_url connection string on heroku
     if 'postgres' in os.environ['DATABASE_URL']:
         os.environ['DATABASE_URL'] = os.environ['DATABASE_URL'].replace('postgres', 'postgis')
@@ -223,4 +212,3 @@ STATICFILES_DIRS = [
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 django_heroku.settings(locals())
-#del DATABASES['default']['OPTIONS']['sslmode']
