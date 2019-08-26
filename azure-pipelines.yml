@@ -24,6 +24,9 @@ steps:
 - bash: |
     sudo apt-get update && sudo apt-get -y install postgresql libpq-dev
   displayName: 'Install postgres stuff'
+- bash: |
+    sudo apt-get install gdal-bin
+  displayName: 'Install GDAL libraries'
 - task: UsePythonVersion@0
   inputs:
     versionSpec: '$(PYTHON_VERSION)'
