@@ -50,7 +50,7 @@ steps:
 
 - script: |
     pushd '$(projectRoot)'
-    python src/localcrimesmap/manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input
+    python manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input
   displayName: 'Run tests'
 
 - task: PublishTestResults@2
