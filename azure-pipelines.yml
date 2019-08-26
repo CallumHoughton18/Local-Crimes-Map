@@ -31,18 +31,25 @@ steps:
   inputs:
     scriptSource: 'inline'
     script: |
-      """Search all subdirectories for `manage.py`."""
+      """Search all subdirectories for `manage.py` and 'requirements.txt'."""
       from glob import iglob
       from os import path
       # Python >= 3.5
       manage_py = next(iglob(path.join('**', 'manage.py'), recursive=True), None)
+      requirements_txt = next(iglob(path.join('**', 'requirements.txt'), recursive=True), None)
       if not manage_py:
           raise SystemExit('Could not find a Django project')
+      if not requirements_txt:
+          raise SystemExit('Could not find requirements.txt directory')
       project_location = path.dirname(path.abspath(manage_py))
+      requirements_location = path.dirname(path.abspath(requirements_txt))
       print('Found Django project in', project_location)
+      print('Found requirements txt in', requirements_location)
       print('##vso[task.setvariable variable=projectRoot]{}'.format(project_location))
+      print('##vso[task.setvariable variable=requirementsRoot]{}'.format(requirements_location))
 
 - script: |
+    pushd '$(requirementsRoot)'
     python -m pip install --upgrade pip setuptools wheel
     pip install -r requirements.txt
     pip install unittest-xml-reporting
