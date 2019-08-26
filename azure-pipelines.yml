@@ -7,8 +7,6 @@ trigger:
 - master
 variables:
   DJANGODEBUG: 'True'
-  SECRETKEY: $(SECRETKEY)
-  DATABASE_URL: $(DATABASE_URL)
 
 pool:
   vmImage: 'ubuntu-latest'
