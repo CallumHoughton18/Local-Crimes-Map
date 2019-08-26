@@ -31,10 +31,6 @@ steps:
   inputs:
     versionSpec: '$(PYTHON_VERSION)'
     architecture: 'x64'
-- script: |
-    echo '##vso[task.setvariable variable=SECRETKEY]$(SECRETKEY)'
-    echo '##vso[task.setvariable variable=DATABASE_URL]$(DATABASE_URL)'
-  displayName: set environment variables
 - task: PythonScript@0
   displayName: 'Export project path'
   inputs:
@@ -69,6 +65,9 @@ steps:
     touch sqlite.db
     python manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input
   displayName: 'Run tests'
+  env:
+    DATABASE_URL: $(DATABASE_URL)
+    SECRETKEY: $(SECRETKEY)
 
 - task: PublishTestResults@2
   inputs:
