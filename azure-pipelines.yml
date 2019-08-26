@@ -6,8 +6,8 @@
 trigger:
 - master
 variables:
-  DJANGODEBUG: 'True' 
-  SECRETKEY: ')ysx)^%w1c2b1175g!nv*%k-dbafk*j(kzoig+^^87^rbaf$b#'
+  DJANGODEBUG: 'True'
+
 pool:
   vmImage: 'ubuntu-latest'
 strategy:
@@ -21,11 +21,16 @@ strategy:
   maxParallel: 3
 
 steps:
+- bash: |
+    sudo apt-get update && sudo apt-get -y install postgresql libpq-dev
+  displayName: 'Install postgres stuff'
+- bash: |
+    sudo apt-get install gdal-bin
+  displayName: 'Install GDAL libraries'
 - task: UsePythonVersion@0
   inputs:
     versionSpec: '$(PYTHON_VERSION)'
     architecture: 'x64'
-
 - task: PythonScript@0
   displayName: 'Export project path'
   inputs:
@@ -57,8 +62,12 @@ steps:
 
 - script: |
     pushd '$(projectRoot)'
+    touch sqlite.db
     python manage.py test --testrunner xmlrunner.extra.djangotestrunner.XMLTestRunner --no-input
   displayName: 'Run tests'
+  env:
+    DATABASE_URL: $(DATABASE_URL)
+    SECRETKEY: $(SECRETKEY)
 
 - task: PublishTestResults@2
   inputs:
