@@ -20,7 +20,7 @@
 
     <div id="crimelist" class="tab-pane container fade">
         <select class="custom-select" id="crimetype-select">
-            <option selected>Filter by Crime Type...</option>
+            <option selected disabled>Filter by Crime Type...</option>
             {% for crime_type,crime_amount in crime_type_list %}
                 <option>{{ crime_type }}</option>
             {% endfor %}

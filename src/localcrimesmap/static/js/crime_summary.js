@@ -11,11 +11,15 @@ var crimeSummaryModule = (function() {
     }
     
     function showPosition(position) {
-        let currentLat = position.coords.latitude.toFixed(5);
-        let currentLng = position.coords.longitude.toFixed(5); 
-
-        _latControl.value = currentLat;
-        _lngControl.value = currentLng;
+        if (_latControl.value.length==0){
+            let currentLat = position.coords.latitude.toFixed(5);
+            _latControl.value = currentLat;
+        }
+        
+        if (_lngControl.value.length==0){
+            let currentLng = position.coords.longitude.toFixed(5);
+            _lngControl.value = currentLng; 
+        }
   } 
     return {
         initialize: Initialize,
