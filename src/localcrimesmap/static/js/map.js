@@ -1,8 +1,10 @@
 // This script relies on the getlocation.js script already being loaded into the DOM for the getcurrentlocation functionality.
 
 var mapModule = (function() {
-  var _crimeMarkersLayer
-  var _map
+  var _markersDic = {};
+  var _markersIdSet = new Set();
+  var _crimeMarkersLayer;
+  var _map;
 
   function initMap(map, options) {
     // get point lat and lon
@@ -50,20 +52,22 @@ var mapModule = (function() {
         dataType: 'json',
         success: function (data) {
           {
-            _crimeMarkersLayer.clearLayers();
-
             data.forEach(function(key, index){
-              var lat = key.location.latitude
-              var lng = key.location.longitude
-              var category = key.category
-              var locInfo = key.location.street.name
-              var outcome = "No recorded outcome"
-              if (key.outcome_status && key.outcome_status.category){
-                outcome = key.outcome_status.category
-              }
 
-              var crimeMarker = L.circleMarker([lat,lng], { color: '#3388ff'}).addTo(_crimeMarkersLayer);
-              crimeMarker.bindPopup("<b>" + category + "</b>" + "<br>" + locInfo + "</br>" + "<br>" + outcome + "</br>")
+              if (!_markersIdSet.has(key.id)){
+                var lat = key.location.latitude
+                var lng = key.location.longitude
+                var category = key.category
+                var locInfo = key.location.street.name
+                var outcome = "No recorded outcome"
+                if (key.outcome_status && key.outcome_status.category){
+                  outcome = key.outcome_status.category
+                }
+  
+                var crimeMarker = L.circleMarker([lat,lng], { color: '#3388ff'}).addTo(_crimeMarkersLayer);
+                _markersIdSet.add(key.id);
+                crimeMarker.bindPopup("<b>" + category + "</b>" + "<br>" + locInfo + "</br>" + "<br>" + outcome + "</br>")
+              }
             });
           }
         }
