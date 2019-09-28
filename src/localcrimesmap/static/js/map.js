@@ -1,7 +1,6 @@
 // This script relies on the getlocation.js script already being loaded into the DOM for the getcurrentlocation functionality.
 
 var mapModule = (function() {
-  var _markersDic = {};
   var _markersIdSet = new Set();
   var _crimeMarkersLayer;
   var _map;
@@ -29,6 +28,11 @@ var mapModule = (function() {
     _map.setView([currentLat, currentLng], 16);
   }
 
+  function RefreshAndLoadCrimes(){
+    _crimeMarkersLayer.clearLayers(); 
+    _markersIdSet.clear();
+    LoadCrimes();
+  }
   function LoadCrimes() {
     var selectedDate = $('#dateSelect').val(); 
     var bounds = _map.getBounds();
@@ -75,6 +79,7 @@ var mapModule = (function() {
     }
     return {
       initMap: initMap,
-      loadCrimes: LoadCrimes 
+      loadCrimes: LoadCrimes,
+      refreshAndLoadCrimes: RefreshAndLoadCrimes
     };
 }());
