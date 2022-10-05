@@ -2,7 +2,7 @@
 
 A Django project that displays crime data from the data.police.uk RESTful API on a map, and as a report style breakdown. The crime data from the report style breakdown is then saved in a PostGIS.
 
-This project is deployed on [Heroku](https://localcrimesmap.herokuapp.com/).
+This project is deployed on [here](https://localcrimesmap.callums-stuff.net/).
 
 ## Important Info
 
