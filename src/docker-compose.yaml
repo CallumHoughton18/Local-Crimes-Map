@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  localcrimesmap_postgis_db:
+    image: postgis/postgis
+    volumes:
+      - ./data/:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    restart: on-failure
+    healthcheck:
+      test: "exit 0"
+  
+  localcrimesmap_webapp:
+    build: .
+    command: gunicorn localcrimesmap.wsgi:application --bind 0.0.0.0:8000
+    restart: on-failure
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - DJANGODEBUG=${DJANGODEBUG}
+      - SECRETKEY=${SECRETKEY}
+    depends_on:
+      - localcrimesmap_postgis_db
