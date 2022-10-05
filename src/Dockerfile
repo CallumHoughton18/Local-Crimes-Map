@@ -13,4 +13,3 @@ COPY requirements.txt /app/
 RUN pip install -r requirements.txt
 
 COPY ./localcrimesmap /app/
-RUN python manage.py collectstatic --no-input
