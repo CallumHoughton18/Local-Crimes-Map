@@ -17,3 +17,8 @@ GDAL must be installed on whatever machine you are running this project on.
 ## Docker
 
 There is a docker-compose file to launch the two required services for the app (the Django web app, and the postgres database). You'll need to create a .env file within the `/src` directory with the required environment variables for the docker-compose file.
+
+The docker-compose.yaml is specific to its deployment environment, for instance being available in an external network used by a reverse proxy. 
+
+Once deployed, you can run the migrations using:
+`docker-compose run localcrimesmap_webapp python manage.py migrate`
