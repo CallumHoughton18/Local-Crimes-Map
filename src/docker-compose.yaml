@@ -4,6 +4,7 @@ version: '3.9'
 networks:
   nginx-front-facing-proxy-network:
     external: true
+  localcrimesmap-network:
 
 services:
   localcrimesmap_postgis_db:
@@ -15,6 +16,8 @@ services:
     restart: on-failure
     healthcheck:
       test: "exit 0"
+    networks:
+      - localcrimesmap-network
   
   localcrimesmap_webapp:
     build: .
@@ -28,3 +31,4 @@ services:
       - localcrimesmap_postgis_db
     networks:
       - nginx-front-facing-proxy-network
+      - localcrimesmap-network
